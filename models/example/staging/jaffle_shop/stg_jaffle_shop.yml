@@ -40,5 +40,5 @@ models:
             - name: total_sales
               tests:
                 - custom_tests.test_total_sales_above_threshold:
-                    threshold: 0  # O valor que você deseja definir como limite
+                    threshold: 0  # O valor que você desejar definir como limite
   

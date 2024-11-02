@@ -3,7 +3,7 @@
     select
       order_id,
       sum(amount) as total_amount
-    from {{ ref('stg_jaffle_shop__orders') }}  -- Use the correct model name here
+    from {{ ref('stg_jaffle_shop__orders') }} 
     group by 1
-    having sum(amount) < {{ threshold }}  -- This is where the threshold is defined
+    having sum(amount) < {{ threshold }}  
 {% endmacro %}
