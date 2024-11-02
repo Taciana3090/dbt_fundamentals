@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: stg_jaffle_shop__customers
+    columns: 
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+      - name: first_name  # Corrigido para usar FIRST_NAME
+        tests:
+          - not_null
+      - name: last_name   # Corrigido para usar LAST_NAME
+        tests:
+          - not_null
+  - name: stg_jaffle_shop__orders
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_jaffle_shop__customers')
+              field: customer_id  # O campo no modelo de origem
+      - name: status
+        description: "{{ doc('order_status') }}"
+        tests:
+          - accepted_values:
+              values:
+                - completed
+                - shipped
+                - returned
+                - return_pending
+                - placed
+      - name: stg_jaffle_shop__orders
+        columns:
+            - name: total_sales
+              tests:
+                - custom_tests.test_total_sales_above_threshold:
+                    threshold: 0  # O valor que você deseja definir como limite
+  
